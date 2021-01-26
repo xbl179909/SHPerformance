@@ -1,0 +1,3 @@
+include ':performance'
+include ':app'
+rootProject.name = "SHPerformance"
