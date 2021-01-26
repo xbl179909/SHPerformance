@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.xbl.performance.BlockManager;
 import com.xbl.performance.FpsManager;
+import com.xbl.performance.PerformanceManager;
 
 public class ShApplication extends Application {
 
@@ -16,7 +17,11 @@ public class ShApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        BlockManager.start();
-        FpsManager.start();
+//        BlockManager.start();
+//        FpsManager.start();
+        PerformanceManager.Builder builder = new PerformanceManager.Builder()
+                .CheckBlock(true)
+                .checkFps(true);
+        PerformanceManager.init(builder);
     }
 }
