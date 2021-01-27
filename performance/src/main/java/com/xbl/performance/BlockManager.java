@@ -6,10 +6,12 @@ import android.text.TextUtils;
 import android.util.Printer;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BlockManager {
 
 
+    private static AtomicBoolean doStack = new AtomicBoolean(false);
     private static Handler mDumpStackHandler;
     private static DumpStackRunnable mDumpStackRunnable = new DumpStackRunnable();
     private static DumpStackThread mDumpStackThread = new DumpStackThread("dumpStackThread");
@@ -59,17 +61,29 @@ public class BlockManager {
             List<String> stackList = StackUtils.generateStackStr();
             StackInfo info = new StackInfo(Config.TYPE_BLOCK, stackList);
             info.printStack();
+
+            if (doStack.get()) {
+                mDumpStackHandler.postDelayed(mDumpStackRunnable, Config.BLOCK_WATCHER_INTERVAL);
+            }
         }
     }
 
     private static void startWatcher(){
+        if (doStack.get()) {
+            return;
+        }
+        doStack.set(true);
         if (mDumpStackHandler != null) {
             mDumpStackHandler.removeCallbacks(mDumpStackRunnable);
-            mDumpStackHandler.postDelayed(mDumpStackRunnable, Config.BLOCK_WATCHER_INTERVAL);
+            mDumpStackHandler.postDelayed(mDumpStackRunnable, (long) (Config.BLOCK_WATCHER_INTERVAL * 0.8f));
         }
     }
 
     private static void removeWatcher() {
+        if (!doStack.get()) {
+            return;
+        }
+        doStack.set(true);
         if (mDumpStackHandler != null) {
             mDumpStackHandler.removeCallbacks(mDumpStackRunnable);
 
