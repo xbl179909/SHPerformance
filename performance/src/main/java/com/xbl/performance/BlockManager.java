@@ -63,7 +63,7 @@ public class BlockManager {
             info.printStack();
 
             if (doStack.get()) {
-                mDumpStackHandler.postDelayed(mDumpStackRunnable, Config.BLOCK_WATCHER_INTERVAL);
+                mDumpStackHandler.postDelayed(mDumpStackRunnable, Config.DUMP_INTERVAL);
             }
         }
     }
