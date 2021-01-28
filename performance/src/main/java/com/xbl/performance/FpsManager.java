@@ -9,6 +9,7 @@ public class FpsManager {
 
     private static FrameWatcherRunnable frameWatcherRunnable = new FrameWatcherRunnable();
     private static Handler handler = new Handler();
+
     public static void start() {
         handler.post(frameWatcherRunnable);
         Choreographer.getInstance().postFrameCallback(frameWatcherRunnable);
@@ -30,6 +31,9 @@ public class FpsManager {
             long curTime = SystemClock.elapsedRealtime();
             if (time != -1) {
                 int fps = (int) (1000f * count / (curTime - time));
+                if (fps > Config.DEFAULT_MAX_FPS) {
+                    fps = Config.DEFAULT_MAX_FPS;
+                }
                 Log.d(Config.PERFORMANCE_TAG, String.format("Cur FPS is %S", fps));
             }
             time = curTime;

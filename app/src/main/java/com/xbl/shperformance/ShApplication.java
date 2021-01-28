@@ -19,9 +19,10 @@ public class ShApplication extends Application {
         super.onCreate();
 //        BlockManager.start();
 //        FpsManager.start();
-        PerformanceManager.Builder builder = new PerformanceManager.Builder()
+        PerformanceManager.Builder builder = new PerformanceManager.Builder(this)
                 .CheckBlock(true)
-                .checkFps(true);
+                .checkFps(true)
+                .checkCpuMem(true);
         PerformanceManager.init(builder);
     }
 }

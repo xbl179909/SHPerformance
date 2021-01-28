@@ -61,6 +61,8 @@ public class BlockManager {
             List<String> stackList = StackUtils.generateStackStr();
             StackInfo info = new StackInfo(Config.TYPE_BLOCK, stackList);
             info.printStack();
+            // TODO: 2020/1/28 如果有存储上报功能，可以添加滤重和最大存储数量限制（stack条数或者内存）
+
 
             if (doStack.get()) {
                 mDumpStackHandler.postDelayed(mDumpStackRunnable, Config.DUMP_INTERVAL);
