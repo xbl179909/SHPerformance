@@ -85,7 +85,7 @@ public class BlockManager {
         if (!doStack.get()) {
             return;
         }
-        doStack.set(true);
+        doStack.set(false);
         if (mDumpStackHandler != null) {
             mDumpStackHandler.removeCallbacks(mDumpStackRunnable);
 
